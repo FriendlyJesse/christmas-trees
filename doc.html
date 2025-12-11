@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Luxury Tree - 操作指南</title>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.3);
+            --bg-dark: #050505;
+            --glass-bg: rgba(30, 30, 30, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            color: #e0e0e0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0; padding: 0; line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px; margin: 0 auto; padding: 60px 20px;
+        }
+
+        /* 标题部分 */
+        header { text-align: center; margin-bottom: 50px; }
+        h1 { 
+            color: var(--gold); font-size: 2.8em; margin-bottom: 10px; font-weight: 300; letter-spacing: 2px;
+            text-shadow: 0 0 20px var(--gold-glow);
+        }
+        .subtitle { color: #888; font-size: 1.1em; max-width: 600px; margin: 0 auto; }
+
+        /* 提示框 */
+        .note-box {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid var(--gold);
+            padding: 15px 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95em;
+            color: #ccc;
+        }
+        .note-box strong { color: var(--gold); }
+
+        /* 返回按钮 */
+        .btn-back {
+            position: fixed; top: 20px; left: 20px;
+            text-decoration: none; color: var(--gold);
+            border: 1px solid var(--gold-glow);
+            padding: 8px 15px; border-radius: 20px;
+            font-size: 0.9em; transition: 0.3s;
+            backdrop-filter: blur(5px); z-index: 100;
+        }
+        .btn-back:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px var(--gold-glow); }
+
+        /* 章节标题 */
+        h2 {
+            color: #fff; border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px; margin-top: 50px; margin-bottom: 25px;
+            font-weight: 400; font-size: 1.8em;
+            display: flex; align-items: center; gap: 10px;
+        }
+        h2::before { content: ''; display: block; width: 6px; height: 24px; background: var(--gold); border-radius: 2px; }
+
+        /* 功能卡片通用样式 */
+        .card-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+        }
+        .feature-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-glow);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .card-icon { font-size: 2.5em; margin-bottom: 15px; display: block; }
+        .card-title { font-size: 1.3em; color: var(--gold); margin-bottom: 10px; font-weight: bold; }
+
+        /* 快捷键 */
+        .key-tag {
+            background: #333; color: var(--gold); padding: 2px 8px;
+            border-radius: 4px; font-family: monospace; border: 1px solid #555;
+            font-weight: bold; margin-right: 5px;
+        }
+
+        /* 团队信息 */
+        .team-section {
+            margin-top: 80px; padding: 40px;
+            background: linear-gradient(135deg, rgba(20,20,20,0.8) 0%, rgba(5,5,5,0.9) 100%);
+            border: 1px solid var(--gold-glow);
+            border-radius: 16px; text-align: center;
+        }
+        .team-name { font-size: 1.8em; color: var(--gold); margin-bottom: 10px; letter-spacing: 1px; }
+        .team-desc { color: #888; margin-bottom: 30px; font-size: 0.9em; }
+        
+        .social-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .social-item {
+            background: rgba(255,255,255,0.05); padding: 15px 25px;
+            border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s; display: flex; align-items: center; gap: 10px;
+        }
+        .social-item:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+        .social-label { font-size: 0.9em; opacity: 0.8; }
+        .social-id { font-weight: bold; font-family: monospace; font-size: 1.1em; }
+
+        footer { text-align: center; margin-top: 60px; color: #555; font-size: 0.8em; }
+
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            .container { padding: 40px 15px; }
+            .social-container { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="btn-back">← 返回主程序</a>
+
+    <div class="container">
+        <header>
+            <h1>操作指南</h1>
+            <div class="subtitle">3D Interactive Christmas Tree (Local Edition)</div>
+        </header>
+
+        <div class="note-box">
+            <strong>📢 开源说明：</strong> 本项目源自 GitHub 开源项目，由 <strong>深知库团队</strong> 进行深度二改与本地化部署封装。无需配置繁琐的国外镜像源，解压即用。
+        </div>
+
+        <h2>1. 图片管理 (New)</h2>
+        <div class="card-grid">
+            <div class="feature-card">
+                <span class="card-icon">📂</span>
+                <div class="card-title">历史图库 (History)</div>
+                <p>点击主界面下方的 <span class="key-tag">历史图库</span> 按钮（或按 <span class="key-tag">G</span> 键），打开侧边栏。</p>
+                <ul style="padding-left: 20px; color: #ccc;">
+                    <li><strong>点击图片：</strong> 自动挂载到圣诞树上。</li>
+                    <li><strong>再次点击：</strong> 自动从树上取下（开关模式）。</li>
+                    <li><strong>全部挂载：</strong> 一键让满树挂满回忆。</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <span class="card-icon">🗑️</span>
+                <div class="card-title">删除与清空</div>
+                <p>管理您的数字资产：</p>
+                <ul style="padding-left: 20px; color: #ccc;">
+                    <li><strong>清空场景：</strong> 点击 <span class="key-tag">清空照片</span> 按钮，仅移除屏幕上的照片，不删除文件。</li>
+                    <li><strong>永久删除：</strong> 在图库中，点击图片右上角的红色 <strong>×</strong> 号，彻底删除本地文件。</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>2. AI 手势控制</h2>
+        <p>请站在摄像头前 0.5 - 1 米处，使用<strong>单手</strong>操作。确保环境光线充足。</p>
+        
+        <div class="card-grid">
+            <div class="feature-card">
+                <span class="card-icon">✊</span>
+                <div class="card-title">树木形态 (Tree)</div>
+                <p><strong>动作：</strong> 握紧拳头</p>
+                <p><strong>效果：</strong> 粒子汇聚成经典的旋转圣诞树。这是默认的待机状态。</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="card-icon">🖐️</span>
+                <div class="card-title">星系形态 (Scatter)</div>
+                <p><strong>动作：</strong> 张开手掌</p>
+                <p><strong>效果：</strong> 树木炸裂成漫天星光。移动手掌位置可以控制星系的旋转角度。</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="card-icon">👌</span>
+                <div class="card-title">聚焦时刻 (Focus)</div>
+                <p><strong>动作：</strong> 捏合手指 (OK手势)</p>
+                <p><strong>效果：</strong> 系统会随机抓取一张照片，飞到眼前放大展示，背景变暗。</p>
+            </div>
+        </div>
+
+        <h2>3. 快捷键</h2>
+        <div class="feature-card" style="display: flex; gap: 40px; align-items: center;">
+            <div>
+                <span class="key-tag">H</span>
+                <span>隐藏/显示 界面 UI</span>
+            </div>
+            <div>
+                <span class="key-tag">G</span>
+                <span>打开/关闭 历史图库</span>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <div class="team-name">深知库团队 (DeepSeeku)</div>
+            <div class="team-desc">专注前沿 AI 技术与创意编程落地</div>
+            
+            <div class="social-container">
+                <div class="social-item">
+                    <span class="social-label">抖音 Douyin</span>
+                    <span class="social-id">79897577017</span>
+                    <span>(AI新潮探)</span>
+                </div>
+                <div class="social-item">
+                    <span class="social-label">小红书 Red</span>
+                    <span class="social-id">26798292926</span>
+                    <span>(AI新潮探)</span>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            © 2025 深知库团队 - 文档所有 | Grand Luxury Tree Local Edition
+        </footer>
+    </div>
+
+</body>
+</html>
